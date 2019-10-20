@@ -1,4 +1,4 @@
-package ru.otus.jpa.jpalibrary;
+package ru.otus.jpalibrary;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

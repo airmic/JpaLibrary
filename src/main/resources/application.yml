@@ -1,0 +1,5 @@
+spring:
+  h2.console.enabled: true
+  liquibase.enabled: true
+#  liquibase:
+#    change-log: /db/changelog/db.changelog-master.yaml

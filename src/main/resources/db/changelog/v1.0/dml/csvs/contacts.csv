@@ -1,0 +1,5 @@
+contact_id;contact_type_id;contact_value;user_id
+1;1;ivan@mail.ru;1
+2;2;9021234567;1
+3;1;vasya@mail.ru;2
+4;2;9037655432;2

@@ -1,0 +1,177 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2018-01-11--0001--user
+      author: mike
+      changes:
+      - createTable:
+          tableName: contact_types
+          columns:
+            - column:
+                name: contact_type_id
+                type: integer
+                autoIncrement: true
+                incrementBy: 1
+                startWith: 100
+                constraints:
+                  nullable: false
+                  primaryKey: true
+                  primaryKeyName: pk_contact_type
+            - column:
+                name: contact_name
+                type: varchar(50)
+                constraints:
+                  nullable: false
+      - createTable:
+          tableName: genres
+          columns:
+            - column:
+                name: genre_id
+                type: integer
+                autoIncrement: true
+                incrementBy: 1
+                startWith: 100
+                constraints:
+                  nullable: false
+                  primaryKey: true
+                  primaryKeyName: pk_genre
+            - column:
+                name: genre_name
+                type: varchar(150)
+                constraints:
+                  nullable: false
+      - createTable:
+          tableName: authors
+          columns:
+            - column:
+                name: author_id
+                type: long
+                autoIncrement: true
+                incrementBy: 1
+                startWith: 100
+                constraints:
+                  nullable: false
+                  primaryKey: true
+                  primaryKeyName: pk_author
+            - column:
+                name: last_name
+                type: varchar(150)
+                constraints:
+                  nullable: false
+            - column:
+                name: first_name
+                type: varchar(150)
+                constraints:
+                  nullable: false
+            - column:
+                name: father_name
+                type: varchar(150)
+            - column:
+                name: birth_date
+                type: date
+                constraints:
+                  nullable: false
+      - createTable:
+          tableName: users
+          columns:
+            - column:
+                name: user_id
+                type: long
+                autoIncrement: true
+                incrementBy: 1
+                startWith: 100
+                constraints:
+                  nullable: false
+                  primaryKey: true
+                  primaryKeyName: pk_user
+            - column:
+                name: nick
+                type: varchar(50)
+                constraints:
+                  nullable: false
+      - createTable:
+          tableName: contacts
+          columns:
+            - column:
+                name: contact_id
+                type: long
+                autoIncrement: true
+                incrementBy: 1
+                startWith: 100
+                constraints:
+                  nullable: false
+                  primaryKey: true
+                  primaryKeyName: pk_contact
+            - column:
+                name: contact_type_id
+                type: integer
+                constraints:
+                  nullable: false
+                  foreignKeyName: fk_contact_contact_type
+                  references: contact_types(contact_type_id)
+            - column:
+                name: contact_value
+                type: varchar(100)
+                constraints:
+                  nullable: false
+            - column:
+                name: user_id
+                type: long
+                constraints:
+                  nullable: false
+                  foreignKeyName: fk_contact_user
+                  references: users(user_id)
+      - createTable:
+          tableName: books
+          columns:
+            - column:
+                name: book_id
+                type: long
+                autoIncrement: true
+                incrementBy: 1
+                startWith: 100
+                constraints:
+                  nullable: false
+                  primaryKey: true
+                  primaryKeyName: pk_book
+            - column:
+                name: book_name
+                type: varchar(255)
+                constraints:
+                  nullable: false
+            - column:
+                name: issue_year
+                type: integer
+                constraints:
+                  nullable: false
+            - column:
+                name: genre_id
+                type: integer
+                constraints:
+                  nullable: false
+                  foreignKeyName: fk_book_genre
+                  references: genres(genre_id)
+      - createTable:
+          tableName: books_authors
+          remarks: many to many link books to authors
+          columns:
+            - column:
+                name: book_id
+                type: long
+                remarks: ID from books
+                constraints:
+                  nullable: false
+                  foreignKeyName: fk_book_authors_books
+                  references: books(book_id)
+            - column:
+                name: author_id
+                type: long
+                remarks: ID from authors
+                constraints:
+                  nullable: false
+                  foreignKeyName: fk_book_authors_authors
+                  references: authors(author_id)
+      - addUniqueConstraint:
+          columnNames: book_id, author_id
+          constraintName: books_author_unq
+          tableName: books_authors
+

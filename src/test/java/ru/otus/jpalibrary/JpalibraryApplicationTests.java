@@ -1,4 +1,4 @@
-package ru.otus.jpa.jpalibrary;
+package ru.otus.jpalibrary;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
