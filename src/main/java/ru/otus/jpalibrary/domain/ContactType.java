@@ -1,9 +1,14 @@
 package ru.otus.jpalibrary.domain;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = "contact_name"))
+@Table(name = "contact_types", uniqueConstraints = @UniqueConstraint(columnNames = "contact_name"))
+@Data
+@NoArgsConstructor
 public class ContactType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY )

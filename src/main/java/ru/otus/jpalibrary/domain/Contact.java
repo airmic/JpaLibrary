@@ -1,11 +1,18 @@
 package ru.otus.jpalibrary.domain;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @Entity
+@Table(name = "contacts")
+@Data
+@NoArgsConstructor
 public class Contact {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "contact_id")
     private long id;
 
     @OneToOne
@@ -15,7 +22,4 @@ public class Contact {
     @Column(name = "contact_value", length = 100)
     private String value;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "user_id")
-    private User user;
 }

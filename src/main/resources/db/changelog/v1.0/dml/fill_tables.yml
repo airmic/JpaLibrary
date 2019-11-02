@@ -74,3 +74,13 @@ databaseChangeLog:
           separator: ;
           quoteChar: '"'
           encoding: UTF-8
+
+      - loadUpdateData:
+            tableName: comments
+            primaryKey: comment_id
+            generaredValue: true
+            file: csvs/comments.csv
+            relativeToChangelogFile: true
+            separator: ;
+            quoteChar: '"'
+            encoding: UTF-8

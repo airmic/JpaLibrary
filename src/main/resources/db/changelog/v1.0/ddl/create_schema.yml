@@ -120,6 +120,7 @@ databaseChangeLog:
                   nullable: false
                   foreignKeyName: fk_contact_user
                   references: users(user_id)
+                  deleteCascade: true
       - createTable:
           tableName: books
           columns:
@@ -159,9 +160,10 @@ databaseChangeLog:
                 type: long
                 remarks: ID from books
                 constraints:
-                  nullable: false
-                  foreignKeyName: fk_book_authors_books
-                  references: books(book_id)
+                    nullable: false
+                    foreignKeyName: fk_book_authors_books
+                    references: books(book_id)
+                    deleteCascade: true
             - column:
                 name: author_id
                 type: long
@@ -170,8 +172,63 @@ databaseChangeLog:
                   nullable: false
                   foreignKeyName: fk_book_authors_authors
                   references: authors(author_id)
+                  deleteCascade: true
       - addUniqueConstraint:
           columnNames: book_id, author_id
           constraintName: books_author_unq
           tableName: books_authors
+      - createTable:
+          tableName: comments
+          remarks: Comments to books
+          columns:
+            - column:
+                name: comment_id
+                type: long
+                remarks: ID
+                autoIncrement: true
+                incrementBy: 1
+                startWith: 100
+                constraints:
+                  primaryKey: true
+                  primaryKeyName: pk_comments
+            - column:
+                name: up_id
+                type: long
+                remarks: Link to upper comment
+                constraints:
+                  nullable: true
+                  foreignKeyName: fk_comment_to_upid
+                  references: comments(comment_id)
+                  deleteCascade: true
+            - column:
+                name: book_id
+                type: long
+                remarks: ID from books
+                constraints:
+                  nullable: false
+                  foreignKeyName: fk_comment_book
+                  references: books(book_id)
+                  deleteCascade: true
+            - column:
+                name: user_id
+                type: long
+                remarks: ID from users
+                constraints:
+                  nullable: false
+                  foreignKeyName: fk_comment_user
+                  references: users(user_id)
+                  deleteCascade: true
+            - column:
+                name: text
+                type: varchar2(512)
+                remarks: Comment text
+                constraints:
+                  nullable: false
+            - column:
+                name: created_dt
+                type: TIMESTAMP
+                defaultValueComputed: CURRENT_TIMESTAMP
+                remarks: ID from users
+                constraints:
+                  nullable: false
 
