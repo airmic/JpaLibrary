@@ -9,9 +9,13 @@ import java.sql.SQLException;
 @SpringBootApplication
 public class JpalibraryApplication {
 
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) {
         SpringApplication.run(JpalibraryApplication.class, args);
-        Console.main(args);
+        try {
+            Console.main(args);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }

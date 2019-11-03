@@ -38,7 +38,7 @@ public class BookRepositoryImpl implements BookRepository {
 
     @Override
     @Transactional
-    public Comment addCommentToBook(String commentStr, Book book, User user, Comment upperComment) {
+    public Comment saveBookComment(String commentStr, Book book, User user, Comment upperComment) {
         Comment comment1 = new Comment();
         comment1.setBook(book);
         comment1.setUser(user);

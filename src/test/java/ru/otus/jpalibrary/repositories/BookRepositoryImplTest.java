@@ -12,7 +12,6 @@ import ru.otus.jpalibrary.domain.Book;
 import ru.otus.jpalibrary.domain.Genre;
 import ru.otus.jpalibrary.domain.User;
 
-import java.sql.Date;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -86,7 +85,7 @@ class BookRepositoryImplTest {
                 commentCount[0] = comments.size();
             });
             user.ifPresent(user1 -> {
-                bookRepository.addCommentToBook("Очень хорошая книга",book1,user1, null);
+                bookRepository.saveBookComment("Очень хорошая книга",book1,user1, null);
             });
             bookRepository.getBookComents(book1).ifPresent(comments -> {
                 assertEquals(commentCount[0]+1,comments.size());

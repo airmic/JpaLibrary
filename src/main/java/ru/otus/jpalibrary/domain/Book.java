@@ -10,7 +10,8 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "books", uniqueConstraints = @UniqueConstraint(name = "books_unq", columnNames = {"book_name","issue_year"}))
+@Table(name = "books",
+        indexes = { @Index(name = "books_idx", columnList = "book_name,issue_year")})
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

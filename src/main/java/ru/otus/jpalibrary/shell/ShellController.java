@@ -1,4 +1,4 @@
-package ru.otus.jpalibrary.service;
+package ru.otus.jpalibrary.shell;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.Availability;
@@ -11,21 +11,23 @@ import ru.otus.jpalibrary.domain.Book;
 import ru.otus.jpalibrary.domain.Comment;
 import ru.otus.jpalibrary.domain.Genre;
 import ru.otus.jpalibrary.repositories.comm.ContactTypeEn;
+import ru.otus.jpalibrary.service.BookService;
+import ru.otus.jpalibrary.service.ConsoleService;
+import ru.otus.jpalibrary.service.UserService;
 
-import javax.transaction.Transactional;
 import java.sql.Date;
 import java.util.List;
 
 
 @ShellComponent
-public class ShellService {
+public class ShellController {
 
     private final BookService bookService;
     private final ConsoleService consoleService;
-    private  UserService userService;
+    private UserService userService;
 
     @Autowired
-    public ShellService(BookService bookService, ConsoleService consoleService, UserService userService) {
+    public ShellController(BookService bookService, ConsoleService consoleService, UserService userService) {
         this.bookService = bookService;
         this.consoleService = consoleService;
         this.userService = userService;
@@ -75,7 +77,7 @@ public class ShellService {
     @ShellMethod(value="add new book", key = {"anb"})
     @ShellMethodAvailability("isAuthFun")
     public void addBook(@ShellOption String bookName, @ShellOption Integer issueYear, @ShellOption long authorId, @ShellOption int genreId) {
-        Book book = bookService.createNewBookIsSameNotExist(bookName, issueYear, authorId, genreId);
+        Book book = bookService.createNewBookIfSameNotExist(bookName, issueYear, authorId, genreId);
         consoleService.printBookInfo(book);
     }
 

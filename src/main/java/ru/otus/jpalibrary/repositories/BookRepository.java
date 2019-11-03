@@ -12,7 +12,7 @@ public interface BookRepository {
     List<Book> getAllBookSimple();
     List<Book> getAll();
     Optional<List<Comment>> getBookComents(Book book);
-    Comment addCommentToBook(String commentStr, Book book, User user, Comment upperComment);
+    Comment saveBookComment(String commentStr, Book book, User user, Comment upperComment);
     void save(Book book);
     Optional<Book> getBookById(long book_id);
     Optional<Book> getBookByNameAndYear(String bookName, Integer issueYear);

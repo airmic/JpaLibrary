@@ -39,6 +39,7 @@ databaseChangeLog:
                 type: varchar(150)
                 constraints:
                   nullable: false
+                  unique: true
       - createTable:
           tableName: authors
           columns:
@@ -70,6 +71,10 @@ databaseChangeLog:
                 type: date
                 constraints:
                   nullable: false
+      - addUniqueConstraint:
+          constraintName: author_fio_bd_unq
+          columnNames: last_name, first_name, father_name, birth_date
+          tableName: authors
       - createTable:
           tableName: users
           columns:
@@ -88,6 +93,7 @@ databaseChangeLog:
                 type: varchar(50)
                 constraints:
                   nullable: false
+                  unique: true
       - createTable:
           tableName: contacts
           columns:
@@ -113,6 +119,7 @@ databaseChangeLog:
                 type: varchar(100)
                 constraints:
                   nullable: false
+                  unique: true
             - column:
                 name: user_id
                 type: long
@@ -151,6 +158,15 @@ databaseChangeLog:
                   nullable: false
                   foreignKeyName: fk_book_genre
                   references: genres(genre_id)
+      - createIndex:
+          indexName: books_idx
+          tableName: books
+          columns:
+            - column:
+                name: book_name
+            - column:
+                name: issue_year
+          unique: false
       - createTable:
           tableName: books_authors
           remarks: many to many link books to authors
