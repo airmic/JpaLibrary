@@ -16,7 +16,6 @@ public interface BookService {
 
     Book createNewBookIfSameNotExist(final String bookName, final Integer issueYear, final long authorId, final int genreId);
 
-
     List<Book> getAllBooks();
 
     Comment addCommentToBook(long bookId, String comment, User user);

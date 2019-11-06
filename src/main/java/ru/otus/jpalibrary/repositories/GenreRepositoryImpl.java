@@ -12,8 +12,6 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-
-
 @Repository
 public class GenreRepositoryImpl implements GenreRepository {
     @PersistenceContext
@@ -38,7 +36,6 @@ public class GenreRepositoryImpl implements GenreRepository {
             em.merge(genre);
 
     }
-
 
     @Override
     public Optional<Genre> findByName(String genreName) {

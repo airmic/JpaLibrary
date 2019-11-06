@@ -39,7 +39,6 @@ class BookRepositoryImplTest {
         sessionFactory.getStatistics().clear();
     }
 
-
     @DisplayName("getAll - fetch вариант")
     @Test
     void getAll() {
@@ -52,10 +51,8 @@ class BookRepositoryImplTest {
                 , () -> assertNotNull(books.get(0).getAuthors())
                 , () -> assertEquals(1, books.get(0).getAuthors().size())
                 , () -> assertEquals(1, sessionFactory.getStatistics().getPrepareStatementCount())
-
         );
     }
-
 
     @Test
     void getAllSimple() {
@@ -68,10 +65,8 @@ class BookRepositoryImplTest {
                 , () -> assertNotNull(books.get(0).getAuthors())
                 , () -> assertEquals(1, books.get(0).getAuthors().size())
                 , () -> assertEquals(5, sessionFactory.getStatistics().getPrepareStatementCount())
-
         );
     }
-
 
     @Test
     void addCommentToBook() {
@@ -92,9 +87,7 @@ class BookRepositoryImplTest {
             });
 
         });
-
     }
-
 
     @Test
     void save() {
@@ -141,8 +134,5 @@ class BookRepositoryImplTest {
         obookList.ifPresent( bookList -> {
             assertAll(() -> assertEquals(1L, bookList.size()));
         });
-
     }
-
-
 }

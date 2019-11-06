@@ -13,7 +13,7 @@ spring:
     initialization-mode: embedded
 #    data: data1.sql
   jpa:
-    show-sql: true
+    show-sql: false
 jpa:
   database-platform: org.hibernate.dialect.H2Dialect
 

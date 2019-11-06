@@ -25,4 +25,6 @@ public interface ConsoleService {
     void printCommentConfirm(Comment comment) ;
 
     void printBookComments(Book book, List<Comment> comments) ;
+
+    void printErrorCode(int code);
 }

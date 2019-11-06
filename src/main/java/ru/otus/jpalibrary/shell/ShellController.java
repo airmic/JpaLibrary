@@ -18,7 +18,6 @@ import ru.otus.jpalibrary.service.UserService;
 import java.sql.Date;
 import java.util.List;
 
-
 @ShellComponent
 public class ShellController {
 
@@ -101,6 +100,14 @@ public class ShellController {
         Book book = bookService.getBookById(bookId);
         List<Comment> comments = bookService.getBookComments(book);
         consoleService.printBookComments(book, comments);
+    }
+
+    @ShellMethod( value = "run error", key = {"er"})
+    @ShellMethodAvailability("IsAuthFun")
+    public void runErrorFor15(@ShellOption int code) {
+        if(code == 15)
+            throw new RuntimeException("Test Exception");
+        consoleService.printErrorCode(code);
     }
 
     private Availability isAuthFun() {

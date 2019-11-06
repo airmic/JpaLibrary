@@ -27,6 +27,7 @@ public class ConsoleServiceImpl implements ConsoleService {
         System.out.println("Информация по всем книгам: pab");
         System.out.println("Добавить комментарий к книге: acb <Ид книги> <Комментарий>");
         System.out.println("Печать все комментарии книги: pbc <Ид книги>");
+        System.out.println("Генерация exception при коде раном 15: er 15");
     }
 
     @Override
@@ -89,5 +90,10 @@ public class ConsoleServiceImpl implements ConsoleService {
         System.out.println("Комментарии:");
         comments.forEach(comment -> System.out.println(String.format("\n\n\t - %s\t%s\n\t%s",comment.getUser().getNick()
                 , new SimpleDateFormat("dd.mm.yyyy").format(comment.getCreatedDt()), comment.getText())));
+    }
+
+    @Override
+    public void printErrorCode(int code) {
+        System.out.println(String.format("Введенный код равен %d",code));
     }
 }

@@ -11,11 +11,6 @@ public class JpalibraryApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(JpalibraryApplication.class, args);
-        try {
-            Console.main(args);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
 }

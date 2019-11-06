@@ -14,7 +14,6 @@ public class UserServiceImpl implements UserService{
     private UserInfo userInfo;
     private UserRepository userRepository;
 
-
     @Autowired
     public UserServiceImpl(UserInfo userInfo, UserRepository userRepository) {
         this.userInfo = userInfo;
@@ -42,6 +41,4 @@ public class UserServiceImpl implements UserService{
     public User getUser() {
         return userInfo.getUser();
     }
-
-
 }
