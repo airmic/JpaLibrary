@@ -14,7 +14,6 @@ import ru.otus.jpalibrary.repositories.comm.ContactTypeEn;
 import ru.otus.jpalibrary.service.BookService;
 import ru.otus.jpalibrary.service.ConsoleService;
 import ru.otus.jpalibrary.service.UserService;
-
 import java.sql.Date;
 import java.util.List;
 

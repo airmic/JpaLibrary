@@ -35,5 +35,4 @@ public class Comment {
 
     @Column(name = "created_dt", insertable = false, nullable = false)
     private Date createdDt;
-
 }
