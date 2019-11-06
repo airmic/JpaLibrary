@@ -26,5 +26,4 @@ public class Genre {
     public Genre(String genre) {
         this(0,genre);
     }
-
 }

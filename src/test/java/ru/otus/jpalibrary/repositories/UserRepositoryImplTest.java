@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 @DataJpaTest
-@Import(UserRepositoryImpl.class)
+//@Import(UserRepositoryImpl.class)
 class UserRepositoryImplTest {
 
     @Autowired
@@ -25,7 +25,7 @@ class UserRepositoryImplTest {
     @Test
     @Transactional
     void getUserByContact() {
-        Optional<User> userOp = userRepository.getUserByContact("vasya@mail.ru", ContactTypeEn.EMAIL);
+        Optional<User> userOp = userRepository.getUserByContact("vasya@mail.ru", ContactTypeEn.EMAIL.value());
         assertTrue(userOp.isPresent());
         userOp.ifPresent(user ->
                 assertAll(() -> assertEquals("vasya", user.getNick())

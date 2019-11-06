@@ -49,5 +49,4 @@ public class Author {
     private Date birthDate;
     @ManyToMany(mappedBy = "authors")
     private List<Book> books;
-
 }

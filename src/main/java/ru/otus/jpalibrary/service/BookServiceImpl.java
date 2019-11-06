@@ -3,9 +3,7 @@ package ru.otus.jpalibrary.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.otus.jpalibrary.domain.*;
-import ru.otus.jpalibrary.repositories.AuthorRepository;
-import ru.otus.jpalibrary.repositories.BookRepository;
-import ru.otus.jpalibrary.repositories.GenreRepository;
+import ru.otus.jpalibrary.repositories.*;
 
 import java.sql.Date;
 import java.util.*;
@@ -17,23 +15,26 @@ public class BookServiceImpl implements BookService {
     private GenreRepository genreRepository;
     private AuthorRepository authorRepository;
     private BookRepository bookRepository;
+    private CommentRepository commentRepository;
 
     @Autowired
     public BookServiceImpl(GenreRepository genreRepository
                        , AuthorRepository authorRepository
                        , BookRepository bookRepository
+                        , CommentRepository commentRepository
     ) {
         this.genreRepository = genreRepository;
         this.authorRepository = authorRepository;
         this.bookRepository = bookRepository;
+        this.commentRepository = commentRepository;
     }
 
     @Override
     public Genre getFindedOrCreatedGenreByName(final String genre) {
-        Optional<Genre> ret = genreRepository.findByName(genre);
+        Optional<Genre> ret = genreRepository.findByGenreName(genre);
         if( !ret.isPresent() ) {
             Genre newGenre = new Genre(genre);
-            genreRepository.save(newGenre);
+            newGenre = genreRepository.save(newGenre);
             ret = Optional.of(newGenre);
         }
         return ret.get();
@@ -41,11 +42,11 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Author getFindedOrCreatedAuthorsByName(final String lastName, final String firstName, final String middleName, final Date birthDate) {
-        Optional<Author> authorOptional = authorRepository.findByFIOAndBD(lastName,firstName,middleName,birthDate);
+        Optional<Author> authorOptional = authorRepository.findByLastNameAndFirstNameAndMiddleNameAndBirthDate(lastName,firstName,middleName,birthDate);
         if( authorOptional.isPresent() )
             return authorOptional.get();
         Author author = new Author(lastName,firstName,middleName,birthDate);
-        authorRepository.save(author);
+        author = authorRepository.save(author);
         return author;
     }
 
@@ -77,18 +78,17 @@ public class BookServiceImpl implements BookService {
                                 throw new RuntimeException("ВВеден неверный ИД актора");
                             })
                     ));
-            bookRepository.save(bookt);
+            bookt = bookRepository.save(bookt);
             return bookt;
 
         };
-        return bookRepository.getBookByNameAndYear(bookName, issueYear).orElseGet(createNewBookWhenSearchFailed);
-
+        return bookRepository.getBookByBookNameAndIssueYear(bookName, issueYear).orElseGet(createNewBookWhenSearchFailed);
     }
 
 
     @Override
     public List<Book> getAllBooks() {
-        return bookRepository.getAll();
+        return bookRepository.findAll();
     }
 
     @Override
@@ -96,9 +96,7 @@ public class BookServiceImpl implements BookService {
         Book book = bookRepository.getBookById(bookId).orElseThrow( (Supplier<? extends RuntimeException>)() -> {
             throw new RuntimeException("Введен неверный ИД книги");
         });
-
-        return bookRepository.saveBookComment(comment,book,user,null);
-
+        return commentRepository.saveBookComment(comment,book,user,null);
     }
 
     @Override
@@ -110,8 +108,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Comment> getBookComments(Book book) {
-
-        return bookRepository.getBookComents(book).orElseThrow( (Supplier<? extends RuntimeException>) () -> {
+        return commentRepository.getComents(book).orElseThrow( (Supplier<? extends RuntimeException>) () -> {
             throw new RuntimeException("Не могу получить список комментариев");
         });
     }

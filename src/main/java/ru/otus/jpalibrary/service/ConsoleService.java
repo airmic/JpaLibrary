@@ -9,20 +9,12 @@ import java.util.List;
 
 public interface ConsoleService {
     void printHelp();
-
     void printGenreList(List<Genre> genres) ;
-
     void printGenre(Genre genre) ;
-
     void printAuthor(Author author) ;
-
     void printAuthorList(List<Author> authors) ;
-
     void printBookInfo(Book book) ;
-
     void printAllBooks(List<Book> books) ;
-
     void printCommentConfirm(Comment comment) ;
-
     void printBookComments(Book book, List<Comment> comments) ;
 }

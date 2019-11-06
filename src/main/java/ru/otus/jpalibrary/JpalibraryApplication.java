@@ -17,5 +17,4 @@ public class JpalibraryApplication {
             e.printStackTrace();
         }
     }
-
 }

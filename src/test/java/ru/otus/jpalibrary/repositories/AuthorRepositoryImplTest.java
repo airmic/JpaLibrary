@@ -4,8 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.ComponentScan;
 import ru.otus.jpalibrary.domain.Author;
 
 import java.sql.Date;
@@ -14,8 +13,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
-@Import(AuthorRepositoryImpl.class)
-class AuthorRepositoryImplTest {
+public class AuthorRepositoryImplTest {
 
     private static final String MIDDLE_NAME = "Осипович";
     @Autowired
@@ -51,14 +49,14 @@ class AuthorRepositoryImplTest {
         author.setFirstName("Владимир");
         author.setMiddleName("ОсиYович");
         author.setBirthDate(Date.valueOf("1926-07-03"));
-        authorRepository.save(author);
+        author = authorRepository.save(author);
 
         assertEquals(6, authorRepository.findAll().size(), "Должно быть 6");
         assertNotEquals(author.getId(), 0, "Идентификатор не должен быть равен 0");
 
-        author= em.find(Author.class,author.getId());
+        author = em.find(Author.class,author.getId());
         author.setMiddleName(MIDDLE_NAME);
-        authorRepository.save(author);
+        author = authorRepository.save(author);
         assertEquals(MIDDLE_NAME, author.getMiddleName(),"Отчества не совпадают");
 
         Author authorChk = em.find(Author.class, author.getId());
@@ -67,7 +65,7 @@ class AuthorRepositoryImplTest {
 
     @Test
     void findByFIOAndBD() {
-        Optional<Author> author = authorRepository.findByFIOAndBD("Грибоедов", "Александр", "Сергеевич", Date.valueOf("1795-01-15"));
+        Optional<Author> author = authorRepository.findByLastNameAndFirstNameAndMiddleNameAndBirthDate("Грибоедов", "Александр", "Сергеевич", Date.valueOf("1795-01-15"));
         assertTrue(author.isPresent(),"Грибоедов не найден");
         author.ifPresent( (author1) -> assertAll( "Проверка результатов findByFIOAndBD"
                 , () -> assertEquals( "Грибоедов", author1.getLastName(), "Отчетства не сопадают" )

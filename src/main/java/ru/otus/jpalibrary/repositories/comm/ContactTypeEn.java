@@ -22,5 +22,8 @@ public enum ContactTypeEn {
         return null;
     }
 
+    public String toString() {
+        return contactName;
+    }
 
 }
