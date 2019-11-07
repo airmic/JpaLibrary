@@ -1,0 +1,25 @@
+spring:
+  h2:
+    console:
+      enabled: false
+      settings:
+        web-allow-others: false
+  liquibase.enabled: true
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password: password
+#    data: mk-data_mk.sql
+    initialization-mode: always
+
+  jpa:
+    show-sql: true
+    database-platform: org.hibernate.dialect.H2Dialect
+  shell:
+    interactive:
+      enabled: false
+
+logging:
+  level:
+    root: error

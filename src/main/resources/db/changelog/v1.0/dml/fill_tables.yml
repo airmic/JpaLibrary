@@ -1,0 +1,86 @@
+databaseChangeLog:
+- changeSet:
+    id: 0001-mk-load-dml
+    author: Mike
+    context: test
+    runOnChange: true
+    changes:
+      - loadUpdateData:
+          tableName: contact_types
+          primaryKey: contact_type_id
+          generaredValue: true
+          file: csvs/contact_types.csv
+          relativeToChangelogFile: true
+          separator: ;
+          quoteChar: '"'
+          encoding: UTF-8
+
+      - loadUpdateData:
+          tableName: genres
+          primaryKey: genre_id
+          generaredValue: true
+          file: csvs/genres.csv
+          relativeToChangelogFile: true
+          separator: ;
+          quoteChar: '"'
+          encoding: UTF-8
+
+      - loadUpdateData:
+          tableName: authors
+          primaryKey: author_id
+          generaredValue: true
+          file: csvs/authors.csv
+          relativeToChangelogFile: true
+          separator: ;
+          quoteChar: '"'
+          encoding: UTF-8
+
+      - loadUpdateData:
+          tableName: users
+          primaryKey: user_id
+          generaredValue: true
+          file: csvs/users.csv
+          relativeToChangelogFile: true
+          separator: ;
+          quoteChar: '"'
+          encoding: UTF-8
+
+      - loadUpdateData:
+          tableName: contacts
+          primaryKey: contact_id
+          generaredValue: true
+          file: csvs/contacts.csv
+          relativeToChangelogFile: true
+          separator: ;
+          quoteChar: '"'
+          encoding: UTF-8
+
+      - loadUpdateData:
+          tableName: books
+          primaryKey: book_id
+          generaredValue: true
+          file: csvs/books.csv
+          relativeToChangelogFile: true
+          separator: ;
+          quoteChar: '"'
+          encoding: UTF-8
+
+      - loadUpdateData:
+          tableName: books_authors
+          primaryKey: book_id, author_id
+          generaredValue: true
+          file: csvs/books_authors.csv
+          relativeToChangelogFile: true
+          separator: ;
+          quoteChar: '"'
+          encoding: UTF-8
+
+      - loadUpdateData:
+            tableName: comments
+            primaryKey: comment_id
+            generaredValue: true
+            file: csvs/comments.csv
+            relativeToChangelogFile: true
+            separator: ;
+            quoteChar: '"'
+            encoding: UTF-8
