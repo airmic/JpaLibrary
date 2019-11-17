@@ -46,9 +46,7 @@ public class ConsoleServiceImpl implements ConsoleService {
     @Override
     public void printAuthor(Author author) {
         System.out.println("Информация об авторе:\n");
-
         System.out.println(String.format("%d\t\t - \t\t%s %s %s %s", author.getId(), author.getLastName(), author.getFirstName(), ofNullable(author.getMiddleName()).orElse(""), new SimpleDateFormat("dd.MM.yyyy").format(author.getBirthDate())));
-
     }
 
     @Override

@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.context.annotation.Import;
 import ru.otus.jpalibrary.domain.Author;
 import ru.otus.jpalibrary.domain.Book;
 import ru.otus.jpalibrary.domain.Genre;
@@ -19,13 +18,15 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
-@Import({BookRepositoryImpl.class, UserRepositoryImpl.class})
+//@Import({BookRepositoryImpl.class, UserRepositoryImpl.class})
 class BookRepositoryImplTest {
 
     @Autowired
     private BookRepository bookRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private CommentRepository commentRepository;
 
     @Autowired
     private TestEntityManager em;
@@ -39,11 +40,12 @@ class BookRepositoryImplTest {
         sessionFactory.getStatistics().clear();
     }
 
+
     @DisplayName("getAll - fetch вариант")
     @Test
     void getAll() {
         setUp();
-        List<Book> books = bookRepository.getAll();
+        List<Book> books = bookRepository.findAll();
         assertAll(
                 () -> assertNotNull(books, "Не должен быть равен нулю")
                 , () -> assertEquals(5,books.size())
@@ -51,22 +53,10 @@ class BookRepositoryImplTest {
                 , () -> assertNotNull(books.get(0).getAuthors())
                 , () -> assertEquals(1, books.get(0).getAuthors().size())
                 , () -> assertEquals(1, sessionFactory.getStatistics().getPrepareStatementCount())
+
         );
     }
 
-    @Test
-    void getAllSimple() {
-        setUp();
-        List<Book> books = bookRepository.getAllBookSimple();
-        assertAll(
-                () -> assertNotNull(books, "Не должен быть равен нулю")
-                , () -> assertEquals(5,books.size())
-                , () -> assertNotNull(books.get(0).getGenre())
-                , () -> assertNotNull(books.get(0).getAuthors())
-                , () -> assertEquals(1, books.get(0).getAuthors().size())
-                , () -> assertEquals(5, sessionFactory.getStatistics().getPrepareStatementCount())
-        );
-    }
 
     @Test
     void addCommentToBook() {
@@ -76,18 +66,20 @@ class BookRepositoryImplTest {
             Optional<User> user = userRepository.findById(1);
             assertNotNull(user);
             final int[] commentCount = {0};
-            bookRepository.getBookComents(book1).ifPresent(comments -> {
+            commentRepository.getComents(book1).ifPresent(comments -> {
                 commentCount[0] = comments.size();
             });
             user.ifPresent(user1 -> {
-                bookRepository.saveBookComment("Очень хорошая книга",book1,user1, null);
+                commentRepository.saveBookComment("Очень хорошая книга",book1,user1, null);
             });
-            bookRepository.getBookComents(book1).ifPresent(comments -> {
+            commentRepository.getComents(book1).ifPresent(comments -> {
                 assertEquals(commentCount[0]+1,comments.size());
             });
 
         });
+
     }
+
 
     @Test
     void save() {
@@ -97,7 +89,7 @@ class BookRepositoryImplTest {
         book.setBookName("GeneratioNN \"П\"");
         Genre genre = em.find(Genre.class,1);
         book.setGenre(genre);
-        bookRepository.save(book);
+        book = bookRepository.save(book);
         assertNotEquals(0, book.getId());
         Book book2 = em.find(Book.class, book.getId());
         assertAll(
@@ -119,7 +111,7 @@ class BookRepositoryImplTest {
 
     @Test
     void getBookByNameAndYear() {
-        Optional<Book> obook =bookRepository.getBookByNameAndYear("Горе от ума",1957);
+        Optional<Book> obook =bookRepository.getBookByBookNameAndIssueYear("Горе от ума",1957);
         assertTrue(obook.isPresent(),"Должна найтись книга");
         obook.ifPresent(book -> {
             assertAll(() -> assertEquals(1, book.getId()));
@@ -134,5 +126,8 @@ class BookRepositoryImplTest {
         obookList.ifPresent( bookList -> {
             assertAll(() -> assertEquals(1L, bookList.size()));
         });
+
     }
+
+
 }

@@ -35,5 +35,4 @@ public class Book {
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     @JoinTable(uniqueConstraints =@UniqueConstraint(name = "book_author_unq", columnNames = {"book_id", "author_id"}) ,joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "author_id"))
     private List<Author> authors;
-
 }

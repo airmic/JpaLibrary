@@ -24,12 +24,11 @@ public class UserServiceImpl implements UserService{
     public void connectBy(ContactTypeEn ct, String contactVal, String password) {
         if( ct == null )
             return;
-        Optional<User> userOp = userRepository.getUserByContact(contactVal,ct);
+        Optional<User> userOp = userRepository.getUserByContact(contactVal,ct.value());
         userOp.ifPresent( user -> {
             if(  password.equals("123"))
                 userInfo.setUser(user);
         });
-
     }
 
     @Override

@@ -21,5 +21,4 @@ public class Contact {
 
     @Column(name = "contact_value", length = 100)
     private String value;
-
 }
